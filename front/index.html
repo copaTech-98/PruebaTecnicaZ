@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="procesoApp">
+<head>
+  <meta charset="utf-8">
+  <title>Gestión de Procesos</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="ProcesoCtrl">
+
+  <h2>Registrar nuevo paso</h2>
+  <form ng-submit="registrarPaso()">
+    <input type="text" ng-model="nuevo.nombre" placeholder="Nombre" required>
+    <input type="text" ng-model="nuevo.descripcion" placeholder="Descripción">
+    <input type="number" ng-model="nuevo.orden" placeholder="Orden" required>
+    <button type="submit">Registrar</button>
+  </form>
+
+  <h2>Listado de Pasos</h2>
+  <ul>
+    <li ng-repeat="p in pasos">
+      Paso {{p.orden}}: {{p.nombre}} - {{p.descripcion}}
+    </li>
+  </ul>
+
+  <h2>Historial</h2>
+  <ul>
+    <li ng-repeat="h in historial">
+      [{{h.accion}}] Paso #{{h.paso_id}} | {{h.fecha}}<br>
+      Hash actual: {{h.hash_actual}}
+    </li>
+  </ul>
+
+  <script>
+    angular.module('procesoApp', [])
+      .controller('ProcesoCtrl', function($scope, $http) {
+        $scope.pasos = [];
+        $scope.historial = [];
+        $scope.nuevo = {};
+
+        const cargarDatos = () => {
+          $http.get('http://localhost:3000/pasos').then(res => $scope.pasos = res.data);
+          $http.get('http://localhost:3000/historial').then(res => $scope.historial = res.data);
+        };
+
+        $scope.registrarPaso = () => {
+          $http.post('http://localhost:3000/pasos', $scope.nuevo).then(() => {
+            $scope.nuevo = {};
+            cargarDatos();
+          });
+        };
+
+        cargarDatos();
+      });
+  </script>
+</body>
+</html>
