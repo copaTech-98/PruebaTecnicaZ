@@ -1,8 +1,9 @@
 
 require("dotenv").config();
 const { PORT, HOST } = process.env;
-const { server, BDinstance } = require("./src/db/db.js");
-
+const { server } = require("./src/App.js");
+const { BDinstance } = require("./src/db/db.js");
+require('./src/db/db.js')
 
 server.listen(PORT, HOST, async () => {
   try {
