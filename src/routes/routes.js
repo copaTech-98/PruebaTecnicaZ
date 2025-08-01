@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { HistorialPaso } = require("../models/HistorialPaso");
 const { Paso } = require("../models/Paso");
+const router = Router();
 
 router.get('/historial', async (req, res, next) => {
     try {
@@ -40,7 +41,7 @@ router.get('/historial', async (req, res, next) => {
       next(err);
     }
   });
-const router = Router();
+
 
 
 module.exports = router;
