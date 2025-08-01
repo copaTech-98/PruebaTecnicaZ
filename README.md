@@ -1,2 +1,5 @@
-# Alitemplate-server
-Template para servidor de nodejs con express, postgress y sequelize.
+##Prueba tecnica
+
+Gestor de paquetes pnpm 
+instalar dependencias pnpm i 
+correr servidor en ruta principal pnpm run start
